@@ -31,10 +31,12 @@ class ViewController: UIViewController {
                 cells[key] = cellView
             }
         }
-        print(cells)
+
         view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(handlePan)))
         
     }
+    
+    var selectedView: UIView?
     
     func handlePan(gesture: UIPanGestureRecognizer) {
         let location = gesture.location(in: view)
@@ -43,11 +45,27 @@ class ViewController: UIViewController {
         let i = Int(location.x / width)
         let j = Int(location.y / width)
         
-//        print(i, j)
-        
         let key = "\(i)|\(j)"
-        let cellView = cells[key]
-        cellView?.backgroundColor = .white
+        guard let cellView = cells[key] else { return }
+
+        if selectedView != cellView {
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: { 
+                self.selectedView?.layer.transform = CATransform3DIdentity
+            }, completion: nil)
+        }
+        
+        selectedView = cellView
+        
+        view.bringSubview(toFront: cellView)
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: { 
+            cellView.layer.transform = CATransform3DMakeScale(3, 3, 3)
+        }, completion: nil)
+        
+        if gesture.state == .ended {
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: { 
+                cellView.layer.transform = CATransform3DIdentity
+            }, completion: nil)
+        }
         
     }
     

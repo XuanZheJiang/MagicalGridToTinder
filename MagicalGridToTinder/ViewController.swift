@@ -18,7 +18,7 @@ class ViewController: UIViewController {
         
         let width = view.frame.width / CGFloat(numViewPerRow)
         
-        for j in 0...30 {
+        for j in 0...26 {
             for i in 0..<numViewPerRow {
                 let cellView = UIView()
                 cellView.backgroundColor = randomColor()
@@ -49,7 +49,7 @@ class ViewController: UIViewController {
         guard let cellView = cells[key] else { return }
 
         if selectedView != cellView {
-            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: { 
+            UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
                 self.selectedView?.layer.transform = CATransform3DIdentity
             }, completion: nil)
         }
@@ -57,12 +57,12 @@ class ViewController: UIViewController {
         selectedView = cellView
         
         view.bringSubview(toFront: cellView)
-        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: { 
+        UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
             cellView.layer.transform = CATransform3DMakeScale(3, 3, 3)
         }, completion: nil)
         
         if gesture.state == .ended {
-            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: { 
+            UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
                 cellView.layer.transform = CATransform3DIdentity
             }, completion: nil)
         }
